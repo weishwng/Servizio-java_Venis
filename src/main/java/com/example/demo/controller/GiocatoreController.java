@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.GiocatoreDto;
 import com.example.demo.dto.ModificaGiocatoreRequest;
 import com.example.demo.service.DrupalGiocatoriService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,18 +30,14 @@ public class GiocatoreController {
     }
 
     @PostMapping("/{id}")
-    public ModificaGiocatoreRequest modificaGiocatore(
+    public ResponseEntity<String> modificaGiocatore(
             @PathVariable String id,
             @RequestBody ModificaGiocatoreRequest richiesta) {
 
         UUID.fromString(id);
 
-        System.out.println("POST ricevuto per giocatore: " + id);
-        System.out.println("Nuovo nome: " + richiesta.nome());
-        System.out.println("Nuovo cognome: " + richiesta.cognome());
-        System.out.println("Nuovo numero: " + richiesta.numero());
-        System.out.println("Nuovo ruolo: " + richiesta.ruolo());
+        giocatoriService.modificaGiocatore(id, richiesta);
 
-        return richiesta;
+        return ResponseEntity.ok("Giocatore aggiornato con successo");
     }
 }
