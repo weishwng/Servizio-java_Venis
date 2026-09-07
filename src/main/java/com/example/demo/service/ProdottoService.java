@@ -40,4 +40,16 @@ public class ProdottoService {
 
         return repository.save(prodotto);
     }
+
+    public void eliminaProdotto(Long id) {
+
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Prodotto non trovato"
+            );
+        }
+
+        repository.deleteById(id);
+    }
 }

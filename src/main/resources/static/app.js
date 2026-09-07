@@ -1,105 +1,149 @@
-const ruolo = { //ruoli dei giocatori e le rispettive classi CSS per lo stile
-    palleggiatore: "ruolo-palleggiatore",
-    opposto: "ruolo-opposto",
-    centrale: "ruolo-centrale",
-    banda: "ruolo-banda",
-    libero: "ruolo-libero"
-};
+async function caricaProdotti() {
 
-async function caricaGiocatori() {
+    const response = await fetch("/api/prodotti");
 
-    const response = await fetch("/api/giocatori"); //richiestta get
+    const contenitore = document.getElementById("prodotti");
 
     if (!response.ok) {
-        alert("Errore nel caricamento dei giocatori");
+        contenitore.innerHTML =
+            '<div class="empty">Errore nel caricamento dei prodotti.</div>';
         return;
     }
 
-    const giocatori = await response.json();
-
-    const contenitore = document.getElementById("giocatori");
+    const prodotti = await response.json();
 
     contenitore.innerHTML = "";
 
-    giocatori.forEach(giocatore => {
+    if (prodotti.length === 0) {
+        contenitore.innerHTML =
+            '<div class="empty">Nessun prodotto presente.</div>';
+        return;
+    }
 
-        const elemento = document.createElement("article");
-        elemento.className = "player-card";
+    prodotti.forEach(prodotto => {
 
-        const ruoloClasse = ruolo[(giocatore.ruolo || "").toLowerCase()] || "ruolo-altro";
+        const card = document.createElement("article");
 
-        elemento.innerHTML = `
-            <div class="player-number ${ruoloClasse}">${giocatore.numero}</div>
+        card.className = "product-card";
 
-            <div class="player-body">
-                <div class="player-heading">
-                    <h2>${giocatore.nome} ${giocatore.cognome}</h2>
-                    <span class="player-role ${ruoloClasse}">${giocatore.ruolo}</span>
-                </div>
+        card.innerHTML = `
+            <h3>${prodotto.nome}</h3>
 
-                <div class="player-fields">
-                    <label>Nome
-                        <input id="nome-${giocatore.id}" value="${giocatore.nome}">
-                    </label>
+            <span class="category">
+                ${prodotto.categoria}
+            </span>
 
-                    <label>Cognome
-                        <input id="cognome-${giocatore.id}" value="${giocatore.cognome}">
-                    </label>
+            <div class="price">
+                € ${Number(prodotto.prezzo).toFixed(2)}
+            </div>
 
-                    <label>Numero
-                        <input id="numero-${giocatore.id}" type="number" value="${giocatore.numero}">
-                    </label>
+            <div class="quantity">
+                Quantità disponibile: ${prodotto.quantita}
+            </div>
 
-                    <label>Ruolo
-                        <input id="ruolo-${giocatore.id}" value="${giocatore.ruolo}">
-                    </label>
-                </div>
-
-                <div class="player-actions">
-                    <button class="btn-save" onclick="salvaGiocatore('${giocatore.id}')">Salva</button>
-                    <span id="messaggio-${giocatore.id}" class="player-message"></span>
-                </div>
+            <div class="card-actions">
+                <button class="delete-btn"
+                        onclick="eliminaProdotto(${prodotto.id})">
+                    Elimina
+                </button>
             </div>
         `;
 
-        contenitore.appendChild(elemento);
+        contenitore.appendChild(card);
     });
 }
 
 
-async function salvaGiocatore(id) {
+async function eliminaProdotto(id) {
 
-    const nome = document.getElementById(`nome-${id}`).value;
-    const cognome = document.getElementById(`cognome-${id}`).value;
-    const numero = document.getElementById(`numero-${id}`).value;
-    const ruolo = document.getElementById(`ruolo-${id}`).value;
+    const conferma = confirm(
+        "Vuoi davvero eliminare questo prodotto?"
+    );
 
-    const response = await fetch(`/api/giocatori/${id}`, {
+    if (!conferma) {
+        return;
+    }
 
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            nome: nome,
-            cognome: cognome,
-            numero: Number(numero),
-            ruolo: ruolo
-        })
+    const response = await fetch(`/api/prodotti/${id}`, {
+        method: "DELETE"
     });
-
-    const messaggio = document.getElementById(`messaggio-${id}`);
 
     if (response.ok) {
-        messaggio.textContent = "Salvato";
-        messaggio.classList.remove("is-error");
-        messaggio.classList.add("is-success");
-        await caricaGiocatori(); 
+        await caricaProdotti();
     } else {
-        messaggio.textContent = "Errore nel salvataggio";
-        messaggio.classList.remove("is-success");
-        messaggio.classList.add("is-error");
+        alert("Errore durante l'eliminazione del prodotto.");
     }
 }
+
+
+document
+    .getElementById("form-prodotto")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const nome =
+            document.getElementById("nome").value;
+
+        const categoria =
+            document.getElementById("categoria").value;
+
+        const prezzo =
+            document.getElementById("prezzo").value;
+
+        const quantita =
+            document.getElementById("quantita").value;
+
+        const messaggio =
+            document.getElementById("messaggio");
+
+        const response = await fetch("/api/prodotti", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                nome: nome,
+                categoria: categoria,
+                prezzo: Number(prezzo),
+                quantita: Number(quantita)
+            })
+        });
+
+        if (response.ok) {
+
+            messaggio.textContent =
+                "Prodotto aggiunto correttamente.";
+
+            messaggio.className = "success";
+
+            this.reset();
+
+            await caricaProdotti();
+
+        } else if (response.status === 409) {
+
+            messaggio.textContent =
+                "Questo prodotto esiste già.";
+
+            messaggio.className = "error";
+
+        } else {
+
+            messaggio.textContent =
+                "Errore durante il salvataggio.";
+
+            messaggio.className = "error";
+        }
+    });
+
+
+document
+    .getElementById("btn-carica")
+    .addEventListener("click", caricaProdotti);
+
+
+caricaProdotti();

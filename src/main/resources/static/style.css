@@ -178,3 +178,21 @@ input:focus {
         flex-direction: column;
     }
 }
+
+.card-actions {
+    margin-top: 16px;
+}
+
+.delete-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    background: #b63b35;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #992f2a;
+}

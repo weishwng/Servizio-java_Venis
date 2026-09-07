@@ -27,4 +27,10 @@ public class ProdottoController {
     public Prodotto creaProdotto(@RequestBody Prodotto prodotto) {
         return service.creaProdotto(prodotto);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminaProdotto(@PathVariable Long id) {
+        service.eliminaProdotto(id);
+    }
 }
