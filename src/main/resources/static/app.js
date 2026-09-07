@@ -1,6 +1,14 @@
+const ruolo = { //ruoli dei giocatori e le rispettive classi CSS per lo stile
+    palleggiatore: "ruolo-palleggiatore",
+    opposto: "ruolo-opposto",
+    centrale: "ruolo-centrale",
+    banda: "ruolo-banda",
+    libero: "ruolo-libero"
+};
+
 async function caricaGiocatori() {
 
-    const response = await fetch("/api/giocatori");
+    const response = await fetch("/api/giocatori"); //richiestta get
 
     if (!response.ok) {
         alert("Errore nel caricamento dei giocatori");
@@ -15,38 +23,43 @@ async function caricaGiocatori() {
 
     giocatori.forEach(giocatore => {
 
-        const elemento = document.createElement("div");
+        const elemento = document.createElement("article");
+        elemento.className = "player-card";
+
+        const ruoloClasse = ruolo[(giocatore.ruolo || "").toLowerCase()] || "ruolo-altro";
 
         elemento.innerHTML = `
-            <hr>
+            <div class="player-number ${ruoloClasse}">${giocatore.numero}</div>
 
-            <h2>${giocatore.nome} ${giocatore.cognome}</h2>
+            <div class="player-body">
+                <div class="player-heading">
+                    <h2>${giocatore.nome} ${giocatore.cognome}</h2>
+                    <span class="player-role ${ruoloClasse}">${giocatore.ruolo}</span>
+                </div>
 
-            <label>Nome:</label>
-            <input id="nome-${giocatore.id}" value="${giocatore.nome}">
+                <div class="player-fields">
+                    <label>Nome
+                        <input id="nome-${giocatore.id}" value="${giocatore.nome}">
+                    </label>
 
-            <br>
+                    <label>Cognome
+                        <input id="cognome-${giocatore.id}" value="${giocatore.cognome}">
+                    </label>
 
-            <label>Cognome:</label>
-            <input id="cognome-${giocatore.id}" value="${giocatore.cognome}">
+                    <label>Numero
+                        <input id="numero-${giocatore.id}" type="number" value="${giocatore.numero}">
+                    </label>
 
-            <br>
+                    <label>Ruolo
+                        <input id="ruolo-${giocatore.id}" value="${giocatore.ruolo}">
+                    </label>
+                </div>
 
-            <label>Numero:</label>
-            <input id="numero-${giocatore.id}" type="number" value="${giocatore.numero}">
-
-            <br>
-
-            <label>Ruolo:</label>
-            <input id="ruolo-${giocatore.id}" value="${giocatore.ruolo}">
-
-            <br><br>
-
-            <button onclick="salvaGiocatore('${giocatore.id}')">
-                SALVA
-            </button>
-
-            <span id="messaggio-${giocatore.id}"></span>
+                <div class="player-actions">
+                    <button class="btn-save" onclick="salvaGiocatore('${giocatore.id}')">Salva</button>
+                    <span id="messaggio-${giocatore.id}" class="player-message"></span>
+                </div>
+            </div>
         `;
 
         contenitore.appendChild(elemento);
@@ -80,14 +93,13 @@ async function salvaGiocatore(id) {
     const messaggio = document.getElementById(`messaggio-${id}`);
 
     if (response.ok) {
-
-        messaggio.textContent = " Salvato!";
-
-        // Ricarica i dati direttamente da Drupal
-        await caricaGiocatori();
-
+        messaggio.textContent = "Salvato";
+        messaggio.classList.remove("is-error");
+        messaggio.classList.add("is-success");
+        await caricaGiocatori(); 
     } else {
-
-        messaggio.textContent = " Errore nel salvataggio";
+        messaggio.textContent = "Errore nel salvataggio";
+        messaggio.classList.remove("is-success");
+        messaggio.classList.add("is-error");
     }
 }

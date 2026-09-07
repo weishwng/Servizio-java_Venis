@@ -11,3 +11,6 @@ public class DemoApplication {
 	}
 
 }
+
+//Classe principale dell'applicazione Spring Boot.
+//Avvia il progetto e crea il server web.

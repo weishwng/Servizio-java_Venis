@@ -1,24 +1,75 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestione Giocatori</title>
+    <title>Gestione Prodotti</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>GESTIONE GIOCATORI</h1>
+<header class="header">
+    <div>
+        <h1>Gestione Prodotti</h1>
+        <p>Prodotti salvati nel database</p>
+    </div>
+</header>
 
-    <button onclick="caricaGiocatori()">
-        Carica giocatori
-    </button>
+<main class="container">
 
-    <div id="giocatori"></div>
+    <section class="form-card">
+        <h2>Nuovo prodotto</h2>
 
-    <script src="app.js"></script>
+        <form id="form-prodotto">
+
+            <div class="form-grid">
+
+                <label>
+                    Nome
+                    <input id="nome" type="text" required>
+                </label>
+
+                <label>
+                    Categoria
+                    <input id="categoria" type="text" required>
+                </label>
+
+                <label>
+                    Prezzo
+                    <input id="prezzo" type="number" step="0.01" min="0" required>
+                </label>
+
+                <label>
+                    Quantità
+                    <input id="quantita" type="number" min="0" required>
+                </label>
+
+            </div>
+
+            <button type="submit" class="btn">
+                Aggiungi prodotto
+            </button>
+
+            <p id="messaggio"></p>
+
+        </form>
+    </section>
+
+    <section>
+        <div class="section-title">
+            <h2>Prodotti</h2>
+            <button id="btn-carica" class="btn secondary">
+                Aggiorna
+            </button>
+        </div>
+
+        <div id="prodotti" class="products"></div>
+    </section>
+
+</main>
+
+<script src="app.js"></script>
 
 </body>
-
 </html>
