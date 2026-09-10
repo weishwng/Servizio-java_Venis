@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prodotti</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <h1>Prodotti</h1>
+
+    <form id="formProdotto">
+
+        <input
+            type="text"
+            id="nome"
+            placeholder="Nome prodotto"
+            required
+        >
+
+        <input
+            type="number"
+            id="prezzo"
+            placeholder="Prezzo"
+            required
+        >
+
+        <input
+            type="number"
+            id="quantita"
+            placeholder="Quantità"
+            required
+        >
+
+        <input
+            type="number"
+            id="categoria_id"
+            placeholder="ID categoria"
+            required
+        >
+
+        <button type="submit">
+            Aggiungi prodotto
+        </button>
+
+    </form>
+
+    <pre id="risultato"></pre>
+
+    <script src="/script.js"></script>
+
+</body>
+
+</html>

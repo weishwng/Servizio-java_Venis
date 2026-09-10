@@ -1,0 +1,149 @@
+package com.example.demo.model;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import tools.jackson.databind.JsonNode;
+import jakarta.persistence.*;
+
+@Entity
+@Table(
+    name = "prodotto",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "uk_prodotto_unico",
+            columnNames = {"nome", "categoria_id", "prezzo", "quantita"}
+        )
+    }
+)
+public class Prodotto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nome;
+
+    private Double prezzo;
+
+    private Integer quantita;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_id")
+    @JsonIgnore
+    private Categoria categoria;
+
+    public Prodotto() {
+    }
+
+    public Prodotto(String nome, String categoria, Double prezzo, Integer quantita) {
+        this.nome = nome;
+        this.prezzo = prezzo;
+        this.quantita = quantita;
+
+        Categoria c = new Categoria();
+        c.setNome(categoria);
+        this.categoria = c;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Double getPrezzo() {
+        return prezzo;
+    }
+
+    public void setPrezzo(Double prezzo) {
+        this.prezzo = prezzo;
+    }
+
+    public Integer getQuantita() {
+        return quantita;
+    }
+
+    public void setQuantita(Integer quantita) {
+        this.quantita = quantita;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    /*
+     * Manteniamo "categoria" compatibile con il vecchio frontend.
+     * In risposta viene restituito il nome della categoria.
+     */
+    @JsonProperty("categoria")
+    public String getCategoriaNome() {
+        return categoria != null ? categoria.getNome() : null;
+    }
+
+    /*
+     * Accetta:
+     * "categoria": "Elettronica"
+     * oppure
+     * "categoria": {"id": 1}
+     * oppure
+     * "categoria": {"id_categoria": 1}
+     */
+    @JsonProperty("categoria")
+    public void setCategoriaJson(JsonNode node) {
+        if (node == null || node.isNull()) {
+            this.categoria = null;
+            return;
+        }
+
+        Categoria c = new Categoria();
+
+        if (node.isTextual()) {
+            c.setNome(node.asText());
+        } else if (node.isNumber()) {
+            c.setId(node.asLong());
+        } else if (node.isObject()) {
+
+            if (node.has("id_categoria") && !node.get("id_categoria").isNull()) {
+                c.setId(node.get("id_categoria").asLong());
+            } else if (node.has("id") && !node.get("id").isNull()) {
+                c.setId(node.get("id").asLong());
+            }
+
+            if (node.has("nome") && !node.get("nome").isNull()) {
+                c.setNome(node.get("nome").asText());
+            }
+        }
+
+        this.categoria = c;
+    }
+
+    @JsonProperty("categoriaId")
+    @JsonAlias({"categoria_id"})
+    public Long getCategoriaId() {
+        return categoria != null ? categoria.getId() : null;
+    }
+
+    @JsonProperty("categoriaId")
+    @JsonAlias({"categoria_id"})
+    public void setCategoriaId(Long id) {
+        if (this.categoria == null) {
+            this.categoria = new Categoria();
+        }
+        this.categoria.setId(id);
+    }
+}

@@ -1,0 +1,88 @@
+package com.example.demo.service;
+
+import com.example.demo.model.Categoria;
+import com.example.demo.model.Prodotto;
+import com.example.demo.repository.CategoriaRepository;
+import com.example.demo.repository.ProdottoRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ProdottoService {
+
+    private final ProdottoRepository repository;
+    private final CategoriaRepository categoriaRepository;
+
+    public ProdottoService(
+            ProdottoRepository repository,
+            CategoriaRepository categoriaRepository
+    ) {
+        this.repository = repository;
+        this.categoriaRepository = categoriaRepository;
+    }
+
+    public List<Prodotto> getProdotti() {
+        return repository.findAll();
+    }
+
+    public Prodotto creaProdotto(Prodotto prodotto) {
+
+        Categoria categoriaInput = prodotto.getCategoria();
+
+        if (categoriaInput == null) {
+            throw new IllegalArgumentException("La categoria è obbligatoria");
+        }
+
+        Categoria categoria;
+
+        if (categoriaInput.getId() != null) {
+
+            categoria = categoriaRepository
+                    .findById(categoriaInput.getId())
+                    .orElseThrow(() ->
+                            new IllegalArgumentException(
+                                    "Categoria non trovata: " + categoriaInput.getId()
+                            )
+                    );
+
+        } else if (categoriaInput.getNome() != null
+                && !categoriaInput.getNome().trim().isEmpty()) {
+
+            categoria = categoriaRepository
+                    .findByNomeIgnoreCase(categoriaInput.getNome().trim())
+                    .orElseThrow(() ->
+                            new IllegalArgumentException(
+                                    "Categoria non trovata: " + categoriaInput.getNome()
+                            )
+                    );
+
+        } else {
+            throw new IllegalArgumentException("Categoria non valida");
+        }
+
+        prodotto.setCategoria(categoria);
+
+        boolean esiste = repository.existsByNomeAndCategoriaAndPrezzoAndQuantita(
+                prodotto.getNome(),
+                categoria,
+                prodotto.getPrezzo(),
+                prodotto.getQuantita()
+        );
+
+        if (esiste) {
+            throw new IllegalArgumentException("Prodotto già esistente");
+        }
+
+        return repository.save(prodotto);
+    }
+
+    public void eliminaProdotto(Long id) {
+
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("Prodotto non trovato");
+        }
+
+        repository.deleteById(id);
+    }
+}

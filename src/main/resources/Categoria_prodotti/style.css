@@ -1,0 +1,21 @@
+body {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 300px;
+}
+
+input,button {
+    padding: 8px;
+}
+
+pre {
+    margin-top: 20px;
+    white-space: pre-wrap;
+    font-family: monospace;
+}

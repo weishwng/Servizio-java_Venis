@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/prodotti")
@@ -32,5 +33,13 @@ public class ProdottoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminaProdotto(@PathVariable Long id) {
         service.eliminaProdotto(id);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleIllegalArgumentException(
+            IllegalArgumentException e
+    ) {
+        return Map.of("errore", e.getMessage());
     }
 }

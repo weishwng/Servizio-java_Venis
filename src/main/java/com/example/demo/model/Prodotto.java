@@ -1,24 +1,15 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(
-    uniqueConstraints = @UniqueConstraint(
-        name = "uk_prodotto_unico",
-        columnNames = {
-            "nome",
-            "categoria",
-            "prezzo",
-            "quantita"
-        }
-    )
-)
+@Table(name = "prodotto")
 public class Prodotto {
 
     @Id
@@ -26,22 +17,29 @@ public class Prodotto {
     private Long id;
 
     private String nome;
-    private String categoria;
+
     private Double prezzo;
+
     private Integer quantita;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "prodotto_categoria",
+        joinColumns = @JoinColumn(name = "id_prodotto"),
+        inverseJoinColumns = @JoinColumn(name = "id_categoria")
+    )
+    @JsonIgnore
+    private Set<Categoria> categorie = new HashSet<>();
 
     public Prodotto() {
     }
 
-    public Prodotto(String nome, String categoria, Double prezzo, Integer quantita) {
-        this.nome = nome;
-        this.categoria = categoria;
-        this.prezzo = prezzo;
-        this.quantita = quantita;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -50,14 +48,6 @@ public class Prodotto {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public Double getPrezzo() {
@@ -74,5 +64,45 @@ public class Prodotto {
 
     public void setQuantita(Integer quantita) {
         this.quantita = quantita;
+    }
+
+    @JsonIgnore
+    public Set<Categoria> getCategorieEntity() {
+        return categorie;
+    }
+
+    @JsonIgnore
+    public void setCategorieEntity(Set<Categoria> categorie) {
+        this.categorie = categorie;
+    }
+
+    
+    //Nuovo formato JSON:
+    //"categoria_ids": [1, 2]
+    
+    @JsonProperty("categoria_ids")
+    public Set<Integer> getCategoriaIds() {
+        return categorie.stream()
+                .map(Categoria::getId)
+                .collect(Collectors.toSet());
+    }
+
+    @JsonProperty("categoria_ids")
+    public void setCategoriaIds(Set<Integer> ids) {
+        this.categorie = new HashSet<>();
+        if (ids != null) {
+            for (Integer id : ids) {
+                Categoria c = new Categoria();
+                c.setId(id);
+                this.categorie.add(c);
+            }
+        }
+    }
+
+    @JsonProperty("categorie")
+    public Set<String> getNomiCategorie() {
+        return categorie.stream()
+                .map(Categoria::getNome)
+                .collect(Collectors.toSet());
     }
 }

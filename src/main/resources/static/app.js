@@ -1,3 +1,26 @@
+async function caricaCategorie() {
+
+    const response = await fetch("/api/categorie");
+
+    if (!response.ok) {
+        return;
+    }
+
+    const categorie = await response.json();
+
+    const select = document.getElementById("categoria");
+
+    select.innerHTML = "";
+
+    categorie.forEach(categoria => {
+        const opzione = document.createElement("option");
+        opzione.value = categoria.id;
+        opzione.textContent = categoria.nome;
+        select.appendChild(opzione);
+    });
+}
+
+
 async function caricaProdotti() {
 
     const response = await fetch("/api/prodotti");
@@ -30,7 +53,7 @@ async function caricaProdotti() {
             <h3>${prodotto.nome}</h3>
 
             <span class="category">
-                ${prodotto.categoria}
+                ${Array.isArray(prodotto.categorie) ? prodotto.categorie.join(", ") : ""}
             </span>
 
             <div class="price">
@@ -85,8 +108,12 @@ document
         const nome =
             document.getElementById("nome").value;
 
-        const categoria =
-            document.getElementById("categoria").value;
+        const categoriaSelezionata =
+            document.getElementById("categoria");
+
+        const categoriaIds =
+            Array.from(categoriaSelezionata.selectedOptions)
+                .map(opzione => Number(opzione.value));
 
         const prezzo =
             document.getElementById("prezzo").value;
@@ -107,7 +134,7 @@ document
 
             body: JSON.stringify({
                 nome: nome,
-                categoria: categoria,
+                categoria_ids: categoriaIds,
                 prezzo: Number(prezzo),
                 quantita: Number(quantita)
             })
@@ -146,4 +173,5 @@ document
     .addEventListener("click", caricaProdotti);
 
 
+caricaCategorie();
 caricaProdotti();
