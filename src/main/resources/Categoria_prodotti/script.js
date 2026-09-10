@@ -1,5 +1,5 @@
 const SERVER_URL = "http://localhost:3000";
-//Avvio server node server.js
+//Avvio server con node server.js
 
 const percorso = window.location.pathname.match(/^\/categoria\/(\d+)\/?$/);
 
@@ -42,7 +42,8 @@ async function tuttiProdotti() {
 
 async function mostraProdottiCategoria() {
     if (!percorso) {
-        tuttiProdotti();
+        await tuttiProdotti();
+        return;
     }
 
     const idCategoria = percorso[1];
@@ -63,21 +64,13 @@ async function mostraProdottiCategoria() {
     document.getElementById("risultato").textContent = JSON.stringify(prodottiCategoria,null,2);
 }
 
-async function aggiungiProdotto(event) {
-    event.preventDefault();
+async function aggiungiProdotto(e) {
+    e.preventDefault();
+
     const nome = document.getElementById("nome").value;
-
-    const prezzo = Number(
-        document.getElementById("prezzo").value
-    );
-
-    const quantita = Number(
-        document.getElementById("quantita").value
-    );
-
-    const idCategoria = Number(
-        document.getElementById("categoria_id").value
-    );
+    const prezzo = Number(document.getElementById("prezzo").value);
+    const quantita = Number(document.getElementById("quantita").value);
+    const idCategoria = Number(document.getElementById("categoria_id").value);
 
     //creo il prodotto
     const nuovoProdotto = await postData(
@@ -100,8 +93,11 @@ async function aggiungiProdotto(event) {
 
     console.log(`Prodotto ${nuovoProdotto.nome} aggiunto alla categoria ${idCategoria}`);
 
-    //ricarico i prodotti della categoria
-    await mostraProdottiCategoria();
+    if (!percorso) {
+        await tuttiProdotti();
+    } else {
+        await mostraProdottiCategoria();
+    }
 
     //svuoto i campi
     document.getElementById("nome").value = "";
@@ -110,10 +106,44 @@ async function aggiungiProdotto(event) {
     document.getElementById("categoria_id").value = "";
 }
 
-//quando premo "Aggiungi prodotto"
-document.getElementById("formProdotto").addEventListener("submit",aggiungiProdotto);
+async function eliminaProdotto(e) {
+    e.preventDefault();
+    const idProdotto = Number(document.getElementById("prodotto_id").value);
 
-//quando apro /categoria/1
-mostraProdottiCategoria().catch(errore => {
-    document.getElementById("risultato").textContent = errore.message;
-});
+    try {
+        const collegamenti = await getData(`${SERVER_URL}/prodotto_categoria?id_prodotto=${idProdotto}`);
+        
+        //eliminiamo le relazioni trovate
+        for (const conn of collegamenti) {
+            await fetch(`${SERVER_URL}/prodotto_categoria/${conn.id}`, {
+                method: "DELETE"
+            });
+        }
+
+        //elimino la voce principale dal database
+        await fetch(`${SERVER_URL}/prodotti/${idProdotto}`, {
+            method: "DELETE"
+        });
+
+        console.log(`Prodotto con ID ${idProdotto} eliminato`);
+
+        if (!percorso) {
+            await tuttiProdotti();
+        } else {
+            await mostraProdottiCategoria();
+        }
+
+        document.getElementById("prodotto_id").value = "";
+        document.getElementById("elimina_nome").value = "";
+        document.getElementById("elimina_categoria_id").value = "";
+
+    } catch (error) {
+        console.error("Errore durante l'eliminazione:", error.message);
+    }
+}
+
+document.getElementById("formElimina").addEventListener("submit", eliminaProdotto);
+document.getElementById("formAggiungi").addEventListener("submit", aggiungiProdotto);
+
+//avvio iniziale
+mostraProdottiCategoria()

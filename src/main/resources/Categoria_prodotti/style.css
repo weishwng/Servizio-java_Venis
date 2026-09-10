@@ -1,21 +1,107 @@
+h1 {
+    text-align: center;
+    color: #ebeef0;
+}
+
 body {
-    margin: 20px;
-    font-family: Arial, sans-serif;
+    background-color: #121214; 
+    color: #e2e8f0;           
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    padding: 40px 20px;
+    max-width: 600px;        
+    margin: 0 auto;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 300px;
-}
-
-input,button {
-    padding: 8px;
+input:focus {
+    outline: none;
+    border-color: #3b82f6;
 }
 
 pre {
-    margin-top: 20px;
-    white-space: pre-wrap;
-    font-family: monospace;
+    background-color: #1e1e24;
+    color: #38bdf8;         
+    padding: 18px;
+    border: 1px solid #2d3139;
+    border-radius: 6px;
+    margin-top: 25px;
+    font-family: 'Fira Code', Consolas, Monaco, monospace;
+    font-size: 14px;
+    overflow-x: auto;          
+}
+
+#formAggiungi, #formElimina {
+    border: 2px solid #333333;
+    padding: 45px;
+    width: 600px;
+    background-color: #1e1e24;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#formAggiungi h2, #formElimina h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #edf1f3;
+}
+
+#formAggiungi label, #formElimina label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #94a3b8;          
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#formAggiungi input, #formElimina input {
+    display: block;
+    width: 100%;               
+    box-sizing: border-box;    
+    margin-bottom: 15px;
+    padding: 10px 12px;
+    background-color: #1a1a1e;
+    color: #ffffff;            
+    border: 1px solid #334155;
+    border-radius: 6px;        
+    font-size: 15px;
+    transition: border-color 0.2s;
+}
+
+#formAggiungi button, #formElimina button {
+    padding: 20px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 30px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+#formAggiungi button {
+    background-color: #007bff;
+    border: 3px solid #0056b3;
+}
+
+#formAggiungi button:hover {
+    background-color: #0056b3;
+}
+
+#formElimina button {
+    background-color: rgb(226, 16, 16);
+    border: 3px solid #b30000;
+}
+
+#formElimina button:hover {
+    background-color: #b30000;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #334155;
+    margin: 40px 0;
 }

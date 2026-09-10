@@ -31,12 +31,12 @@ function sendHtmlPage(res) {
     res.sendFile(categoriaPage);
 }
 
-/* HOME */
+//HOME 
 server.get("/", (req, res) => {
     sendHtmlPage(res);
 });
 
-/* CATEGORIA */
+//CATEGORIA 
 server.get("/categoria/:id", (req, res) => {
     if (!/^\d+$/.test(req.params.id)) {
         return res.status(400).send("ID categoria non valido");
@@ -44,12 +44,11 @@ server.get("/categoria/:id", (req, res) => {
     sendHtmlPage(res);
 });
 
-/* FILE STATICI: CSS, JS, immagini */
 server.use(jsonServer.defaults({
     static: resources
 }));
 
-/* API JSON */
+//API JSON 
 server.use(router);
 
 server.listen(3000, () => {
@@ -58,7 +57,7 @@ server.listen(3000, () => {
     console.log("SERVER AVVIATO");
     console.log("=====================================");
     console.log("Home:");
-    console.log("http://localhost:3000/");
+    console.log("http://localhost:3000");
     console.log("");
     console.log("Categoria 1:");
     console.log("http://localhost:3000/categoria/1");
