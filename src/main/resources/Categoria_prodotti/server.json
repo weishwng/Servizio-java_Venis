@@ -12,259 +12,333 @@
       "nome": "Tastiera",
       "prezzo": 35,
       "quantita": 5,
-      "attivo": 0
+      "attivo": 1
     },
     {
       "id": 3,
       "nome": "Monitor",
       "prezzo": 200,
-      "quantita": 3
+      "quantita": 3,
+      "attivo": 1
     },
     {
       "id": 4,
       "nome": "Cuffie",
       "prezzo": 50,
-      "quantita": 8
+      "quantita": 8,
+      "attivo": 1
     },
     {
       "id": 5,
       "nome": "Webcam",
       "prezzo": 60,
-      "quantita": 6
+      "quantita": 6,
+      "attivo": 1
     },
     {
       "nome": "sigma",
       "prezzo": 67,
       "quantita": 67,
-      "id": 6
+      "id": 6,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 7
+      "id": 7,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 8
+      "id": 8,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 9
+      "id": 9,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 10
+      "id": 10,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 11
+      "id": 11,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 12
+      "id": 12,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 13
+      "id": 13,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 14
+      "id": 14,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 15
+      "id": 15,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 2131,
       "quantita": 12312,
-      "id": 16
+      "id": 16,
+      "attivo": 1
     },
     {
       "nome": "wrewe",
       "prezzo": 23,
       "quantita": 32,
-      "id": 17
+      "id": 17,
+      "attivo": 1
     },
     {
       "nome": "wrewe",
       "prezzo": 23,
       "quantita": 32,
-      "id": 18
+      "id": 18,
+      "attivo": 1
     },
     {
       "nome": "wrewe",
       "prezzo": 23,
       "quantita": 32,
-      "id": 19
+      "id": 19,
+      "attivo": 1
     },
     {
       "nome": "wrewe",
       "prezzo": 23,
       "quantita": 32,
-      "id": 20
+      "id": 20,
+      "attivo": 1
     },
     {
       "nome": "wrewe",
       "prezzo": 23,
       "quantita": 32,
-      "id": 21
+      "id": 21,
+      "attivo": 1
     },
     {
       "nome": "wrewe",
       "prezzo": 23,
       "quantita": 32,
-      "id": 22
+      "id": 22,
+      "attivo": 1
     },
     {
       "nome": "wrwwrwr",
       "prezzo": 2243,
       "quantita": 23234,
-      "id": 23
+      "id": 23,
+      "attivo": 1
     },
     {
       "nome": "wrwwrwr",
       "prezzo": 2243,
       "quantita": 23234,
-      "id": 24
+      "id": 24,
+      "attivo": 1
     },
     {
       "nome": "wrwwrwr",
       "prezzo": 2243,
       "quantita": 23234,
-      "id": 25
+      "id": 25,
+      "attivo": 1
     },
     {
       "nome": "wrwwrwr",
       "prezzo": 2243,
       "quantita": 23234,
-      "id": 26
+      "id": 26,
+      "attivo": 1
     },
     {
       "nome": "erwe",
       "prezzo": 2343,
       "quantita": 234,
-      "id": 27
+      "id": 27,
+      "attivo": 1
     },
     {
       "nome": "idjoqiwd",
       "prezzo": 23,
       "quantita": 234,
-      "id": 28
+      "id": 28,
+      "attivo": 1
     },
     {
       "nome": "TestProdotto",
       "prezzo": 10,
       "quantita": 1,
-      "id": 29
+      "id": 29,
+      "attivo": 1
     },
     {
       "nome": "TestFinale",
       "prezzo": 1,
       "quantita": 1,
-      "id": 30
+      "id": 30,
+      "attivo": 1
     },
     {
       "nome": "qwe",
       "prezzo": 123,
       "quantita": 234,
-      "id": 31
+      "id": 31,
+      "attivo": 1
     },
     {
       "nome": "werwe",
       "prezzo": 123,
       "quantita": 123,
-      "id": 32
+      "id": 32,
+      "attivo": 1
     },
     {
       "nome": "TestPostSwitch",
       "prezzo": 1,
       "quantita": 1,
-      "id": 33
+      "id": 33,
+      "attivo": 1
     },
     {
       "nome": "qw",
       "prezzo": 13,
       "quantita": 23,
-      "id": 34
+      "id": 34,
+      "attivo": 1
     },
     {
       "nome": "e",
       "prezzo": 44,
       "quantita": 344,
-      "id": 35
+      "id": 35,
+      "attivo": 1
     },
     {
       "nome": "qwe",
       "prezzo": 123123,
       "quantita": 123123,
-      "id": 36
+      "id": 36,
+      "attivo": 1
     },
     {
       "nome": "tik tiki",
       "prezzo": 67,
       "quantita": 67,
-      "id": 37
+      "id": 37,
+      "attivo": 1
     },
     {
       "nome": "idjwer",
       "prezzo": 324,
       "quantita": 6457,
-      "id": 38
+      "id": 38,
+      "attivo": 1
     },
     {
       "nome": "3453",
       "prezzo": 345,
       "quantita": 345,
-      "id": 39
+      "id": 39,
+      "attivo": 1
     },
     {
       "nome": "sigma234",
       "prezzo": 234,
       "quantita": 234,
-      "id": 40
+      "id": 40,
+      "attivo": 1
     },
     {
       "nome": "234",
       "prezzo": 234,
       "quantita": 234,
-      "id": 41
+      "id": 41,
+      "attivo": 1
     },
     {
       "nome": "123",
       "prezzo": 123,
       "quantita": 123,
-      "id": 42
+      "id": 42,
+      "attivo": 1
     },
     {
       "nome": "12312",
       "prezzo": 123123,
       "quantita": 123123,
-      "id": 44
+      "id": 44,
+      "attivo": 1
     },
     {
       "nome": "12312312123123123",
       "prezzo": 123123123,
       "quantita": 123123123,
-      "id": 45
+      "id": 45,
+      "attivo": 1
+    },
+    {
+      "nome": "nig",
+      "prezzo": 6767,
+      "quantita": 67,
+      "id": 46
+    },
+    {
+      "nome": "nig",
+      "prezzo": 6767,
+      "quantita": 6767,
+      "attivo": 1,
+      "id": 47
+    },
+    {
+      "nome": "ewrw",
+      "prezzo": 23423,
+      "quantita": 234234,
+      "id": 48
+    },
+    {
+      "nome": "mnmnmnmnmn",
+      "prezzo": 90909,
+      "quantita": 909090909,
+      "id": 49
+    },
+    {
+      "nome": "1234",
+      "prezzo": 123,
+      "quantita": 123,
+      "attivo": 1,
+      "id": 50
     }
   ],
   "categorie": [
@@ -406,6 +480,31 @@
       "id_prodotto": 45,
       "id_categoria": 123123123,
       "id": 26
+    },
+    {
+      "id_prodotto": 46,
+      "id_categoria": 67,
+      "id": 27
+    },
+    {
+      "id_prodotto": 47,
+      "id_categoria": 67,
+      "id": 28
+    },
+    {
+      "id_prodotto": 48,
+      "id_categoria": 234240,
+      "id": 29
+    },
+    {
+      "id_prodotto": 49,
+      "id_categoria": 90090909,
+      "id": 30
+    },
+    {
+      "id_prodotto": 50,
+      "id_categoria": 123,
+      "id": 31
     }
   ]
 }

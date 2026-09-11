@@ -28,7 +28,7 @@ async function postData(url, dati) {
     return await response.json();
 }
 
-async function disattivaData(url) {
+async function eliminaData(url) {
     const response = await fetch(url, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -36,7 +36,7 @@ async function disattivaData(url) {
     });
 
     if (!response.ok) {
-        throw new Error("Errore nella disattivazione: " + response.status);
+        throw new Error("Errore nell'eliminazione: " + response.status);
     }
     
     return await response.json();
@@ -122,11 +122,8 @@ function mostraDati() {
 
     let risultati = [...tuttiDati];
 
-    if (nome) {
-        risultati = risultati.filter(prodotto =>
-            String(prodotto.nome).toLowerCase().includes(nome)
-        );
-    }
+    if (nome) {risultati = risultati.filter(prodotto =>String(prodotto.nome).toLowerCase().includes(nome));}
+
     if (idVal) {risultati = risultati.filter(prodotto =>String(prodotto.id) === idVal);}
     if (prezzo) {risultati = risultati.filter(prodotto =>String(prodotto.prezzo) === prezzo);}
     if (quantita) {risultati = risultati.filter(prodotto =>String(prodotto.quantita) === quantita);}
@@ -145,6 +142,8 @@ function mostraDati() {
             );
         });
     }
+
+    risultati = risultati.filter(prodotto => Number(prodotto.attivo) === 1);
 
     document.getElementById("risultato").textContent = JSON.stringify(risultati, null, 2);
 }
@@ -169,7 +168,8 @@ async function aggiungiProdotto(e) {
             {
                 nome: nome,
                 prezzo: prezzo,
-                quantita: quantita
+                quantita: quantita,
+                attivo:1
             }
         );
 
@@ -180,7 +180,7 @@ async function aggiungiProdotto(e) {
             }
         );
 
-        // aggiorna i dati
+        //aggiorna i dati
         document.getElementById("formAggiungi").reset();
 
         await mostraProdottiCategoria();
@@ -200,12 +200,13 @@ async function eliminaProdotto(e) {
             throw new Error("ID prodotto non valido");
         }
 
-        await disattivaData(SERVER_URL + "/prodotti/" + idProdotto);
+        await eliminaData(SERVER_URL + "/prodotti/" + idProdotto);
 
         document.getElementById("formElimina").reset();
         await mostraProdottiCategoria();
 
-        showStatus("Prodotto eliminato (disattivato) con successo", "ok");
+        showStatus("Prodotto eliminato con successo", "ok");
+
     } catch (error) {
         console.error(error);
         showStatus(error.message, "errore");

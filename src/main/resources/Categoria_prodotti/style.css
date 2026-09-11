@@ -5,7 +5,7 @@ h1 {
 
 body {
     background-color: #15151f; 
-    color: #e2e8f0;           
+    color: #15151f;           
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     padding: 40px 20px;
@@ -136,9 +136,9 @@ hr {
     font-size: 0.9em;
 }
 
-#statusMessage.info   { background: #003; border-color: blue; }
-#statusMessage.ok     { background: #030; border-color: green; }
-#statusMessage.errore { background: #300; border-color: red; }
+#statusMessage.info   { background: #003; border-color: blue; color:#ffffff;}
+#statusMessage.ok     { background: #030; border-color: green; color:#ffffff;}
+#statusMessage.errore { background: #300; border-color: red; color:#ffffff;}
 
 #formRicerca {
     border: 2px solid #333333;
@@ -214,6 +214,7 @@ hr {
     cursor: pointer;
     font-weight: bold;
     margin-top: 30px;
+    margin-bottom: 30px;
     transition: background-color 0.2s, transform 0.1s;
     width: 100%;
 }
