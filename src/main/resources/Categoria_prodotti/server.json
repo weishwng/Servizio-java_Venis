@@ -4,13 +4,15 @@
       "id": 1,
       "nome": "Mouse",
       "prezzo": 20,
-      "quantita": 10
+      "quantita": 10,
+      "attivo": 0
     },
     {
       "id": 2,
       "nome": "Tastiera",
       "prezzo": 35,
-      "quantita": 5
+      "quantita": 5,
+      "attivo": 0
     },
     {
       "id": 3,
@@ -257,6 +259,12 @@
       "prezzo": 123123,
       "quantita": 123123,
       "id": 44
+    },
+    {
+      "nome": "12312312123123123",
+      "prezzo": 123123123,
+      "quantita": 123123123,
+      "id": 45
     }
   ],
   "categorie": [
@@ -393,6 +401,11 @@
       "id_prodotto": 44,
       "id_categoria": 123123,
       "id": 25
+    },
+    {
+      "id_prodotto": 45,
+      "id_categoria": 123123123,
+      "id": 26
     }
   ]
 }

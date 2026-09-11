@@ -31,12 +31,12 @@ function sendHtmlPage(res) {
     res.sendFile(categoriaPage);
 }
 
-//HOME 
+//home
 server.get("/", (req, res) => {
     sendHtmlPage(res);
 });
 
-//CATEGORIA 
+//categoria 
 server.get("/categoria/:id", (req, res) => {
     if (!/^\d+$/.test(req.params.id)) {
         return res.status(400).send("ID categoria non valido");
@@ -48,7 +48,7 @@ server.use(jsonServer.defaults({
     static: resources
 }));
 
-//API JSON 
+//API json
 server.use(router);
 
 server.listen(3000, () => {
